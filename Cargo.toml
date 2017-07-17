@@ -1,0 +1,8 @@
+[package]
+name = "quick_sort"
+version = "0.1.0"
+authors = ["Xudong Huang <huangxu008@hotmail.com>"]
+
+[dependencies]
+rand = "0.3"
+may = { git = "ssh://git@gitlab.com/Xudong-Huang/may.git" }
