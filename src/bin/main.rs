@@ -11,6 +11,10 @@ fn default_vec(n: usize) -> Vec<u32> {
     (0..n).map(|_| rng.next_u32()).collect()
 }
 
+    fn is_sorted<T: Send + Ord>(v: &[T]) -> bool {
+        (1..v.len()).all(|i| v[i - 1] <= v[i])
+    }
+
 fn main() {
     may::config().set_workers(4);
     let mut v = vec![8u32, 2, 9, 6, 5, 0, 1, 4, 3, 7];
@@ -33,5 +37,5 @@ fn main() {
     let nanos = dur.subsec_nanos() as u64 + dur.as_secs() * 1_000_000_000u64;
     println!("par sorted {} ints: {} s", n, nanos as f32 / 1e9f32);
 
-    assert_eq!(v, v1);
+    assert_eq!(is_sorted(&v1), true);
 }
