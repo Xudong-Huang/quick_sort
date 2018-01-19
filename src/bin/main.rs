@@ -11,9 +11,9 @@ fn default_vec(n: usize) -> Vec<u32> {
     (0..n).map(|_| rng.next_u32()).collect()
 }
 
-    fn is_sorted<T: Send + Ord>(v: &[T]) -> bool {
-        (1..v.len()).all(|i| v[i - 1] <= v[i])
-    }
+fn is_sorted<T: Send + Ord>(v: &[T]) -> bool {
+    (1..v.len()).all(|i| v[i - 1] <= v[i])
+}
 
 fn main() {
     may::config().set_workers(4);
