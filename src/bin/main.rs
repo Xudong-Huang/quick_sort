@@ -1,10 +1,11 @@
 extern crate may;
-extern crate rand;
+extern crate num_cpus;
 extern crate quick_sort;
+extern crate rand;
 
-use std::time;
 use quick_sort::*;
 use rand::{Rng, SeedableRng, XorShiftRng};
+use std::time;
 
 fn default_vec(n: usize) -> Vec<u32> {
     let mut rng = XorShiftRng::from_seed([0, 1, 2, 3]);
@@ -16,7 +17,7 @@ fn is_sorted<T: Send + Ord>(v: &[T]) -> bool {
 }
 
 fn main() {
-    may::config().set_workers(4);
+    may::config().set_workers(num_cpus::get());
     let mut v = vec![8u32, 2, 9, 6, 5, 0, 1, 4, 3, 7];
     quick_sort(&mut v);
     println!("v = {:?}", v);

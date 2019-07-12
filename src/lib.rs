@@ -26,7 +26,6 @@ pub fn quick_sort<T: PartialOrd + Send>(v: &mut [T]) {
     join!(quick_sort(lo), quick_sort(hi));
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
