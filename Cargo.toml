@@ -6,4 +6,4 @@ authors = ["Xudong Huang <huangxu008@hotmail.com>"]
 [dependencies]
 num_cpus = "1"
 may = "0.3"
-rand = "0.3"
+rand = "0.8"

@@ -4,12 +4,11 @@ extern crate quick_sort;
 extern crate rand;
 
 use quick_sort::*;
-use rand::{Rng, SeedableRng, XorShiftRng};
+use rand::{distributions::Standard, Rng};
 use std::time;
 
 fn default_vec(n: usize) -> Vec<u32> {
-    let mut rng = XorShiftRng::from_seed([0, 1, 2, 3]);
-    (0..n).map(|_| rng.next_u32()).collect()
+    rand::thread_rng().sample_iter(Standard).take(n).collect()
 }
 
 fn is_sorted<T: Send + Ord>(v: &[T]) -> bool {
