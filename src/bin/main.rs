@@ -37,5 +37,5 @@ fn main() {
     let nanos = dur.subsec_nanos() as u64 + dur.as_secs() * 1_000_000_000u64;
     println!("par sorted {} ints: {} s", n, nanos as f32 / 1e9f32);
 
-    assert_eq!(is_sorted(&v1), true);
+    assert!(is_sorted(&v1));
 }

@@ -38,6 +38,6 @@ mod tests {
     fn it_works() {
         let mut v = vec![8, 2, 9, 6, 5, 0, 1, 4, 3, 7];
         quick_sort(&mut v);
-        assert_eq!(is_sorted(&v), true);
+        assert!(is_sorted(&v));
     }
 }
