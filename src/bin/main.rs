@@ -1,41 +1,32 @@
-extern crate may;
-extern crate num_cpus;
-extern crate quick_sort;
-extern crate rand;
-
-use quick_sort::*;
-use rand::{distributions::Standard, Rng};
+use quick_sort::quick_sort;
+use rand::{distributions::Standard, seq::SliceRandom, Rng};
 use std::time;
 
 fn default_vec(n: usize) -> Vec<u32> {
     rand::thread_rng().sample_iter(Standard).take(n).collect()
 }
 
-fn is_sorted<T: Send + Ord>(v: &[T]) -> bool {
-    (1..v.len()).all(|i| v[i - 1] <= v[i])
-}
-
 fn main() {
-    may::config().set_workers(num_cpus::get());
-    let mut v = vec![8u32, 2, 9, 6, 5, 0, 1, 4, 3, 7];
+    let mut v = Vec::from_iter(0..20);
+    v.shuffle(&mut rand::thread_rng());
+    println!("v = {:?}", v);
     quick_sort(&mut v);
     println!("v = {:?}", v);
 
-    let n = 10000000;
+    let n = 10_000_000;
 
     let mut v = default_vec(n);
+    let mut v1 = v.clone();
+
     let start = time::Instant::now();
     v.sort();
     let dur = start.elapsed();
-    let nanos = dur.subsec_nanos() as u64 + dur.as_secs() * 1_000_000_000u64;
-    println!("seq sorted {} ints: {} s", n, nanos as f32 / 1e9f32);
+    println!("seq sorted {} ints: {} s", n, dur.as_secs_f32());
 
-    let mut v1 = default_vec(n);
     let start = time::Instant::now();
     quick_sort(&mut v1);
     let dur = start.elapsed();
-    let nanos = dur.subsec_nanos() as u64 + dur.as_secs() * 1_000_000_000u64;
-    println!("par sorted {} ints: {} s", n, nanos as f32 / 1e9f32);
+    println!("par sorted {} ints: {} s", n, dur.as_secs_f32());
 
-    assert!(is_sorted(&v1));
+    assert_eq!(v, v1);
 }
